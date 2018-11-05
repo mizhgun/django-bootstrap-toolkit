@@ -1,3 +1,5 @@
+**!!!This is the fix to support leagacy bootstrap2 layout on Django 2.x!!!**
+
 Django Toolkit for integration with Bootstrap v2
 ================================================
 

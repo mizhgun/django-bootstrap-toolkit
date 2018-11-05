@@ -24,7 +24,7 @@ def demo_form_with_template(request):
         'layout': layout,
     }))
 
-def demo_form(request):
+def demo_form(request, test_form=TestForm()):
     messages.success(request, 'I am a success message.')
     layout = request.GET.get('layout')
     if not layout:
@@ -33,7 +33,7 @@ def demo_form(request):
         form = TestForm(request.POST)
         form.is_valid()
     else:
-        form = TestForm()
+        form = test_form
     form.fields['title'].widget = BootstrapUneditableInput()
     return render_to_response('form.html', RequestContext(request, {
         'form': form,

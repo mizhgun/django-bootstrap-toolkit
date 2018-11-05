@@ -5,33 +5,31 @@ from math import floor
 from django.forms import BaseForm
 from django.forms.forms import BoundField
 from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
-from django.template import Context
 from django.template.loader import get_template
 from django import template
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.utils.html import escape
 
-
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
                              '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/'
-)
+                             )
 
 BOOTSTRAP_JS_BASE_URL = getattr(settings, 'BOOTSTRAP_JS_BASE_URL',
                                 BOOTSTRAP_BASE_URL + 'js/'
-)
+                                )
 
 BOOTSTRAP_JS_URL = getattr(settings, 'BOOTSTRAP_JS_URL',
                            None
-)
+                           )
 
 BOOTSTRAP_CSS_BASE_URL = getattr(settings, 'BOOTSTRAP_CSS_BASE_URL',
                                  BOOTSTRAP_BASE_URL + 'css/'
-)
+                                 )
 
 BOOTSTRAP_CSS_URL = getattr(settings, 'BOOTSTRAP_CSS_URL',
                             BOOTSTRAP_CSS_BASE_URL + 'bootstrap.css'
-)
+                            )
 
 register = template.Library()
 
@@ -95,21 +93,17 @@ def as_bootstrap(form_or_field, layout='vertical,false'):
         bootstrap_float = False
 
     if isinstance(form_or_field, BaseForm):
-        return get_template("bootstrap_toolkit/form.html").render(
-            Context({
-                'form': form_or_field,
-                'layout': layout,
-                'float': bootstrap_float,
-            })
-        )
+        return get_template("bootstrap_toolkit/form.html").render({
+            'form': form_or_field,
+            'layout': layout,
+            'float': bootstrap_float,
+        })
     elif isinstance(form_or_field, BoundField):
-        return get_template("bootstrap_toolkit/field.html").render(
-            Context({
-                'field': form_or_field,
-                'layout': layout,
-                'float': bootstrap_float,
-            })
-        )
+        return get_template("bootstrap_toolkit/field.html").render({
+            'field': form_or_field,
+            'layout': layout,
+            'float': bootstrap_float,
+        })
     else:
         # Display the default
         return settings.TEMPLATE_STRING_IF_INVALID
@@ -174,7 +168,7 @@ def pagination(page, pages_to_show=11):
     Generate Bootstrap pagination links from a page object
     """
     context = get_pagination_context(page, pages_to_show)
-    return get_template("bootstrap_toolkit/pagination.html").render(Context(context))
+    return get_template("bootstrap_toolkit/pagination.html").render(context)
 
 
 @register.filter
