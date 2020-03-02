@@ -32,7 +32,7 @@ def add_to_css_class(classes, new_class):
         # Strip whitespace
         classes = [c.strip() for c in classes]
         # Remove empty elements
-        classes = filter(None, classes)
+        classes = list(filter(None, classes))
         # Test for existing
         if not new_class in classes:
             classes.append(new_class)
@@ -66,7 +66,7 @@ def get_locale_js_url(lang):
 
 class BootstrapUneditableInput(forms.TextInput):
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if attrs is None:
             attrs = {}
         attrs['type'] = 'hidden'
@@ -119,7 +119,7 @@ class BootstrapDateInput(forms.DateInput):
         }
         return forms.Media(css=css, js=js)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         date_input_attrs = {}
         if attrs:
             date_input_attrs.update(attrs)
