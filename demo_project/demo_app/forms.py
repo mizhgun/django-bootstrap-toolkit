@@ -86,6 +86,7 @@ class TestForm(forms.Form):
 class TestModelForm(forms.ModelForm):
     class Meta:
         model = User
+        fields = '__all__'
 
 
 class TestInlineForm(forms.Form):

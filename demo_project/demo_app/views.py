@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.forms.formsets import formset_factory
 from django.shortcuts import render_to_response
-from django.template.context import RequestContext
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from bootstrap_toolkit.widgets import BootstrapUneditableInput
@@ -19,10 +18,10 @@ def demo_form_with_template(request):
     else:
         form = TestForm()
     modelform = TestModelForm()
-    return render_to_response('form_using_template.html', RequestContext(request, {
+    return render_to_response('form_using_template.html', {
         'form': form,
         'layout': layout,
-    }))
+    })
 
 def demo_form(request, test_form=TestForm()):
     messages.success(request, 'I am a success message.')
@@ -35,20 +34,20 @@ def demo_form(request, test_form=TestForm()):
     else:
         form = test_form
     form.fields['title'].widget = BootstrapUneditableInput()
-    return render_to_response('form.html', RequestContext(request, {
+    return render_to_response('form.html', {
         'form': form,
         'layout': layout,
-    }))
+    })
 
 def demo_form_inline(request):
     layout = request.GET.get('layout', '')
     if layout != 'search':
         layout = 'inline'
     form = TestInlineForm()
-    return render_to_response('form_inline.html', RequestContext(request, {
+    return render_to_response('form_inline.html', {
         'form': form,
         'layout': layout,
-    }))
+    })
 
 
 def demo_formset(request):
@@ -61,10 +60,10 @@ def demo_formset(request):
         formset.is_valid()
     else:
         formset = DemoFormSet()
-    return render_to_response('formset.html', RequestContext(request, {
+    return render_to_response('formset.html', {
         'formset': formset,
         'layout': layout,
-    }))
+    })
 
 
 def demo_tabs(request):
@@ -81,10 +80,10 @@ def demo_tabs(request):
             'title': 'Tab 2',
             }
     ]
-    return render_to_response('tabs.html', RequestContext(request, {
+    return render_to_response('tabs.html', {
         'tabs': tabs,
         'layout': layout,
-    }))
+    })
 
 
 def demo_pagination(request):
@@ -101,15 +100,15 @@ def demo_pagination(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         show_lines = paginator.page(paginator.num_pages)
-    return render_to_response('pagination.html', RequestContext(request, {
+    return render_to_response('pagination.html', {
         'lines': show_lines,
-    }))
+    })
 
 
 def demo_widgets(request):
     layout = request.GET.get('layout', 'vertical')
     form = WidgetsForm()
-    return render_to_response('form.html', RequestContext(request, {
+    return render_to_response('form.html', {
         'form': form,
         'layout': layout,
-    }))
+    })

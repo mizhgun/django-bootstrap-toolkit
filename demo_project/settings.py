@@ -1,11 +1,18 @@
 # Django settings for demo_app project.
 import os
 
+PROJECT_ROOT = os.path.dirname(__file__)
 
-SETTINGS_ROOT = os.path.dirname(__file__)
+SETTINGS_ROOT = PROJECT_ROOT
 
 DEBUG = True
 TEMPLATE_DEBUG = True
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+    },
+]
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -106,11 +113,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'demo_project.urls'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
