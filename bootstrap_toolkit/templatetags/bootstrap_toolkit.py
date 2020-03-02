@@ -11,6 +11,9 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.utils.html import escape
 
+unicode = str
+
+
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
                              '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/'
                              )
@@ -41,7 +44,7 @@ def bootstrap_stylesheet_url(css=None):
     """
     url = BOOTSTRAP_CSS_URL
     if css:
-        url = BOOTSTRAP_CSS_BASE_URL + u'bootstrap-%s.css' % css
+        url = BOOTSTRAP_CSS_BASE_URL + 'bootstrap-%s.css' % css
     else:
         url = BOOTSTRAP_CSS_URL
     return url
@@ -52,7 +55,7 @@ def bootstrap_stylesheet_tag(css=None):
     """
     HTML tag to insert Bootstrap stylesheet
     """
-    return u'<link rel="stylesheet" href="%s">' % bootstrap_stylesheet_url(css)
+    return mark_safe('<link rel="stylesheet" href="%s">' % bootstrap_stylesheet_url(css))
 
 
 @register.simple_tag
@@ -75,8 +78,8 @@ def bootstrap_javascript_tag(name=None):
     """
     url = bootstrap_javascript_url(name)
     if url:
-        return u'<script src="%s"></script>' % url
-    return u''
+        return mark_safe('<script src="%s"></script>' % url)
+    return ''
 
 
 @register.filter
@@ -144,14 +147,14 @@ def bootstrap_input_type(field):
     if input_type:
         return unicode(input_type)
     if isinstance(widget, TextInput):
-        return u'text'
+        return 'text'
     if isinstance(widget, CheckboxInput):
-        return u'checkbox'
+        return 'checkbox'
     if isinstance(widget, CheckboxSelectMultiple):
-        return u'multicheckbox'
+        return 'multicheckbox'
     if isinstance(widget, RadioSelect):
-        return u'radioset'
-    return u'default'
+        return 'radioset'
+    return 'default'
 
 
 @register.simple_tag
@@ -185,7 +188,7 @@ def html_attrs(attrs):
     Display the attributes given as html attributes :
     >>> import collections
     >>> html_attrs(collections.OrderedDict([('href',"http://theurl.com/img.png"), ('alt','hi "guy')]))
-    u'href="http://theurl.com/img.png" alt="hi &quot;guy" '
+    'href="http://theurl.com/img.png" alt="hi &quot;guy" '
     """
     pairs = []
     for name, value in attrs.items():
@@ -198,7 +201,7 @@ def bootstrap_messages(context, *args, **kwargs):
     """
     Show request messages in Bootstrap style
     """
-    return get_template("bootstrap_toolkit/messages.html").render(context)
+    return get_template("bootstrap_toolkit/messages.html").render(context.flatten())
 
 
 @register.inclusion_tag("bootstrap_toolkit/form.html")
@@ -332,20 +335,20 @@ def get_pagination_context(page, pages_to_show=11, url=None, size=None, align=No
     if url:
         # Remove existing page GET parameters
         url = unicode(url)
-        url = re.sub(r'\?page\=[^\&]+', u'?', url)
-        url = re.sub(r'\&page\=[^\&]+', u'', url)
+        url = re.sub(r'\?page\=[^\&]+', '?', url)
+        url = re.sub(r'\&page\=[^\&]+', '', url)
         # Append proper separator
-        if u'?' in url:
-            url += u'&'
+        if '?' in url:
+            url += '&'
         else:
-            url += u'?'
+            url += '?'
     # Append extra string to url
     if extra:
         if not url:
-            url = u'?'
-        url += unicode(extra) + u'&'
+            url = '?'
+        url += unicode(extra) + '&'
     if url:
-        url = url.replace(u'?&', u'?')
+        url = url.replace(u'?&', '?')
     # Set CSS classes, see http://twitter.github.io/bootstrap/components.html#pagination
     pagination_css_classes = ['pagination']
     if size in ['small', 'large', 'mini']:

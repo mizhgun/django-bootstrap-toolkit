@@ -7,12 +7,6 @@ SETTINGS_ROOT = PROJECT_ROOT
 
 DEBUG = True
 TEMPLATE_DEBUG = True
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'APP_DIRS': True,
-    },
-]
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -96,14 +90,19 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'g3r$7))195#=_q-ez$&&-tgbz7yh4qmlg3h0bvc06-_syc+1(u'
 
-# List of callables that know how to import templates from various sources.
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+    },
+]
+
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
